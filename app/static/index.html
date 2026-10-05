@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkmate</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============== AUTH VIEW ============== -->
+  <main id="auth-view" class="auth-view">
+    <div class="board-pattern" aria-hidden="true"></div>
+
+    <section class="auth-card">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 4 L30 14 L24 10 L18 14 Z M16 18 h16 l2 8 h-20 z M15 28 h18 l2 8 h-22 z M12 38 h24 l1 5 h-26 z"
+                fill="currentColor"/>
+        </svg>
+        <h1>Checkmate</h1>
+      </div>
+      <p class="tagline">Every request is checked before it moves.</p>
+
+      <div class="tabs" role="tablist">
+        <button class="tab is-active" id="tab-login" role="tab" aria-selected="true">Log in</button>
+        <button class="tab" id="tab-register" role="tab" aria-selected="false">Register</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" autocomplete="username" required />
+
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" autocomplete="current-password" required />
+
+        <button type="submit" class="btn-primary">Log in</button>
+        <p class="form-message" id="login-message" role="status"></p>
+      </form>
+
+      <form id="register-form" class="auth-form" hidden>
+        <label for="register-email">Email</label>
+        <input id="register-email" type="email" autocomplete="username" required />
+
+        <label for="register-password">Password</label>
+        <input id="register-password" type="password" autocomplete="new-password" required
+               minlength="10" />
+        <p class="field-hint">At least 10 characters, with an uppercase letter, a lowercase letter, and a digit.</p>
+
+        <button type="submit" class="btn-primary">Create account</button>
+        <p class="form-message" id="register-message" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ============== DASHBOARD VIEW ============== -->
+  <main id="dashboard-view" class="dashboard-view" hidden>
+    <header class="dash-header">
+      <div class="brand brand-small">
+        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 4 L30 14 L24 10 L18 14 Z M16 18 h16 l2 8 h-20 z M15 28 h18 l2 8 h-22 z M12 38 h24 l1 5 h-26 z"
+                fill="currentColor"/>
+        </svg>
+        <span>Checkmate</span>
+      </div>
+      <div class="header-right">
+        <span class="user-badge" id="user-email-badge"></span>
+        <span class="admin-badge" id="admin-badge" hidden>Admin</span>
+        <button class="btn-ghost" id="logout-btn">Log out</button>
+      </div>
+    </header>
+
+    <section class="board">
+      <div class="board-head">
+        <h2>Your tasks</h2>
+        <p class="board-sub" id="task-count">No tasks yet</p>
+      </div>
+
+      <form id="new-task-form" class="new-task-form">
+        <input id="new-task-title" type="text" placeholder="Add a task… e.g. Rotate the JWT secret" maxlength="200" required />
+        <button type="submit" class="btn-primary">Add</button>
+      </form>
+
+      <p class="form-message" id="task-message" role="status"></p>
+
+      <ul class="task-list" id="task-list"></ul>
+
+      <div class="empty-state" id="empty-state" hidden>
+        <p>No moves on the board yet.</p>
+        <p class="empty-sub">Add your first task above.</p>
+      </div>
+    </section>
+
+    <!-- Admin panel only shown + populated when the logged-in user is an admin -->
+    <section class="board admin-panel" id="admin-panel" hidden>
+      <div class="board-head">
+        <h2>Admin</h2>
+        <p class="board-sub">Users and recent security events</p>
+      </div>
+
+      <div class="admin-grid">
+        <div>
+          <h3 class="admin-subhead">Users</h3>
+          <ul class="admin-list" id="admin-users-list"></ul>
+        </div>
+        <div>
+          <h3 class="admin-subhead">Audit log</h3>
+          <ul class="admin-list audit-list" id="admin-audit-list"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: checkmate
+      MYSQL_USER: checkmate_user
+      MYSQL_PASSWORD: changeme
+      MYSQL_ROOT_PASSWORD: changeme_root
+    ports:
+      - "3306:3306"
+    volumes:
+      - checkmate_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Inside Docker, the DB host is the service name "db", not "localhost"
+      DATABASE_URL: mysql+pymysql://checkmate_user:changeme@db:3306/checkmate
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  checkmate_mysql_data:
